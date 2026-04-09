@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Sun, Sunset, Moon, Trash2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useRoutineStore, type Task, type TimeOfDay, type TaskProgress } from "@/lib/store"
@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Slider } from "@/components/ui/slider"
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
+
 
 interface TaskCardProps {
   task: Task
@@ -45,7 +46,7 @@ export function TaskCard({ task }: TaskCardProps) {
     transform: CSS.Transform.toString(transform),
     transition,
   }
-  const { labels, updateTask, deleteTask } = useRoutineStore()
+  const { labels, updateTask, deleteTask, toggleWeekDay } = useRoutineStore()
   const [isEditing, setIsEditing] = useState(false)
   const [editTitle, setEditTitle] = useState(task.title)
 
@@ -78,6 +79,43 @@ export function TaskCard({ task }: TaskCardProps) {
     }
     setIsEditing(false)
   }
+  const safeWeekDays = task.weekDays ?? [false, false, false, false, false, false, false]
+  
+  const calculateStreak = (weekDays: boolean[]) => {
+  let maxStreak = 0
+  let currentStreak = 0
+
+  for (let i = 0; i < weekDays.length; i++) {
+    if (weekDays[i]) {
+      currentStreak++
+      maxStreak = Math.max(maxStreak, currentStreak)
+    } else {
+      currentStreak = 0
+    }
+  }
+
+  return maxStreak
+}
+  const calculateCurrentStreak = (weekDays: boolean[]) => {
+  let streak = 0
+
+  for (let i = weekDays.length - 1; i >= 0; i--) {
+    if (weekDays[i]) streak++
+    else break
+  }
+
+  return streak
+}
+  const currentStreak = calculateCurrentStreak(safeWeekDays)
+  const maxStreak = calculateStreak(safeWeekDays)
+  const [animate, setAnimate] = useState(false)
+
+  useEffect(() => {
+  if (currentStreak > 0) {
+    setAnimate(true)
+    setTimeout(() => setAnimate(false), 300)
+  }
+}, [currentStreak])
 
   return (
       <div
@@ -110,7 +148,6 @@ export function TaskCard({ task }: TaskCardProps) {
             {task.title || "Vou estar fazendo..."}
           </button>
         )}
-
         <button
           onClick={cycleLabel}
           className="h-6 w-6 rounded-md transition-transform hover:scale-110 shrink-0"
@@ -118,6 +155,7 @@ export function TaskCard({ task }: TaskCardProps) {
           title={label.name}
         />
       </div>
+
 
       <div className="mt-4 flex items-center gap-3">
         <div className="flex-1">
@@ -146,7 +184,44 @@ export function TaskCard({ task }: TaskCardProps) {
           <TimeIcon className="h-4 w-4" />
         </button>
       </div>
+            <div className="mt-3 flex items-center justify-between">
+  <div
+    className={`flex items-center gap-2 px-2 py-1 rounded-full text-xs font-bold transition-all ${
+      currentStreak >= 5
+        ? "bg-orange-500/20 text-orange-400 scale-105"
+        : currentStreak >= 3
+        ? "bg-yellow-500/20 text-yellow-400"
+        : "bg-muted text-muted-foreground"
+    } ${animate ? "scale-110" : ""}`}
+  >
+    🔥 {currentStreak}
+  </div>
 
+  <span className="text-[10px] text-muted-foreground">
+    recorde: {maxStreak}
+  </span>
+</div>
+            <div className="mt-3 flex justify-between px-1">
+        {["S", "T", "Q", "Q", "S", "S", "D"].map((day, index) => {
+          const active = safeWeekDays[index]
+
+          return (
+            <div key={index} className="flex flex-col items-center gap-1">
+              <button
+                onClick={() => toggleWeekDay(task.id, index)}
+                className={`h-4 w-4 rounded-full transition-all hover:scale-125 ${
+                  active
+                    ? "bg-green-500 scale-110 shadow-lg shadow-green-500/50"
+                    : "bg-gray-400 opacity-50"
+                }`}
+              />
+              <span className="text-[10px] text-muted-foreground">
+                {day}
+              </span>
+            </div>
+          )
+        })}
+      </div>
       <Button
         variant="ghost"
         size="icon"
@@ -155,6 +230,7 @@ export function TaskCard({ task }: TaskCardProps) {
       >
         <Trash2 className="h-3 w-3" />
       </Button>
+      
     </div>
   )
 }

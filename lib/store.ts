@@ -18,6 +18,7 @@ export interface Task {
   timeOfDay: TimeOfDay
   createdAt: Date
   completedAt?: Date
+  weekDays: boolean[]
 }
 
 export interface Reward {
@@ -47,6 +48,7 @@ interface RoutineStore {
   addLabel: (name: string, color: string) => void
   updateLabel: (id: string, updates: Partial<Label>) => void
   deleteLabel: (id: string) => void
+  toggleWeekDay: (taskId: string, dayIndex: number) => void
 
   // Reward actions
   setReward: (title: string, targetTasks: number) => void
@@ -74,6 +76,8 @@ export const useRoutineStore = create<RoutineStore>()(
       setCompletedTasks: (tasks) => set({ completedTasks: tasks }),
 
       addTask: (title, labelId, timeOfDay) => {
+        if (!title || !title.trim()) return
+        
         const newTask: Task = {
           id: crypto.randomUUID(),
           title,
@@ -81,6 +85,7 @@ export const useRoutineStore = create<RoutineStore>()(
           progress: 0,
           timeOfDay,
           createdAt: new Date(),
+          weekDays: [false, false, false, false, false, false, false],
         }
         set((state) => ({ tasks: [...state.tasks, newTask] }))
       },
@@ -183,6 +188,19 @@ export const useRoutineStore = create<RoutineStore>()(
 
       resetReward: () => {
         set({ currentReward: null })
+      },
+        
+        toggleWeekDay: (taskId, dayIndex) => {
+        set((state) => ({
+          tasks: state.tasks.map((task) => {
+            if (task.id !== taskId) return task
+
+            const newWeek = [...(task.weekDays ?? [false, false, false, false, false, false, false])]
+            newWeek[dayIndex] = !newWeek[dayIndex]
+
+            return { ...task, weekDays: newWeek }
+          })
+        }))
       },
     }),
     {

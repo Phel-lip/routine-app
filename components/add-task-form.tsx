@@ -16,7 +16,7 @@ export function AddTaskForm() {
   const handleAddTask = () => {
     const defaultLabel = labels[0]?.id || "1"
     const defaultTime: TimeOfDay = "morning"
-    addTask("", defaultLabel, defaultTime)
+    addTask("Nova tarefa", defaultLabel, defaultTime)
   }
 
   if (!mounted) {

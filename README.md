@@ -44,6 +44,7 @@ Neste projeto foram aplicados conceitos como:
 ## Preview
 
 ![App](./public/screenshots/AppRotina1.png)
+![App](./public/screenshots/AppRotina2.png)
 
 ---
 

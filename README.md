@@ -41,6 +41,12 @@ Neste projeto foram aplicados conceitos como:
 
 ---
 
+## Preview
+
+![App](./public/screenshots/AppRotina1.png)
+
+---
+
 ## Sobre
 
 Projeto desenvolvido com foco em prática de desenvolvimento front-end, organização de estado e criação de uma experiência gamificada de produtividade.

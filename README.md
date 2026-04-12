@@ -1,6 +1,6 @@
 # DailyXP
 
-Aplicação web de gerenciamento de tarefas com sistema de progresso e streak inspirado no Duolingo.
+Aplicação web de produtividade com sistema de tarefas gamificado, incluindo progresso visual e streak inspirado no Duolingo.
 
 ## Demo
 
@@ -53,17 +53,18 @@ Neste projeto foram aplicados conceitos como:
 ## Preview
 
 ![Home](./public/screenshots/home.png)
-![Home](./public/screenshots/streak.png)
+![Streak](./public/screenshots/streak.png)
 
 ---
 
 ## Como rodar localmente
 
-bash
+```bash
 git clone https://github.com/Phel-lip/routine-app.git
 cd routine-app
 pnpm install
 pnpm dev
+```
 
 ---
 
@@ -75,4 +76,5 @@ Projeto desenvolvido com foco em prática de desenvolvimento front-end, organiza
 
 ## Autor
 
-Desenvolvido por Phellip
+Phellip  
+[GitHub](https://github.com/Phel-lip)

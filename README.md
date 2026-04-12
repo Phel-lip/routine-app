@@ -52,8 +52,8 @@ Neste projeto foram aplicados conceitos como:
 
 ## Preview
 
-![App](./public/screenshots/AppRotina1.png)
-![App](./public/screenshots/AppRotina2.png)
+![Home](./public/screenshots/home.png)
+![Home](./public/screenshots/streak.png)
 
 ---
 

@@ -41,10 +41,29 @@ Neste projeto foram aplicados conceitos como:
 
 ---
 
+## Decisões técnicas
+
+- Zustand para gerenciamento de estado global simples e performático
+- Persist middleware para salvar dados no localStorage
+- Interface focada em produtividade e feedback visual (streak, progresso)
+- Estrutura inicial gerada com v0.dev e posteriormente adaptada manualmente
+
+---
+
 ## Preview
 
 ![App](./public/screenshots/AppRotina1.png)
 ![App](./public/screenshots/AppRotina2.png)
+
+---
+
+## Como rodar localmente
+
+bash
+git clone https://github.com/Phel-lip/routine-app.git
+cd routine-app
+pnpm install
+pnpm dev
 
 ---
 

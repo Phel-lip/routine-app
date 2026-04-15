@@ -8,6 +8,13 @@ https://routine-app-kx96.vercel.app/
 
 ---
 
+## Preview
+
+![Home](./public/screenshots/home.png)
+![Streak](./public/screenshots/streak.png)
+
+---
+
 ## Funcionalidades
 
 * Criação, edição e exclusão de tarefas
@@ -47,13 +54,6 @@ Neste projeto foram aplicados conceitos como:
 - Persist middleware para salvar dados no localStorage
 - Interface focada em produtividade e feedback visual (streak, progresso)
 - Estrutura inicial gerada com v0.dev e posteriormente adaptada manualmente
-
----
-
-## Preview
-
-![Home](./public/screenshots/home.png)
-![Streak](./public/screenshots/streak.png)
 
 ---
 
